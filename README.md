@@ -80,7 +80,7 @@ Triggers an outbound phone call using your configured Vapi assistant (Andy).
 3. **Set Environment Variables:**
    - In your Railway project dashboard, go to Variables tab
    - Add these environment variables:
-     - `VAPI_API_KEY`: `02522fd6-cc43-4e7b-990d-36346d8899cf`
+     - `VAPI_API_KEY`: Your Vapi private key (not the public key)
      - `ANDY`: `cde00b8a-3ebf-4d4f-8587-7e8fec8e5fda`
 
 4. **Deploy:**
