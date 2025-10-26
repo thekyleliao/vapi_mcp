@@ -122,6 +122,30 @@ Triggers an outbound phone call using your configured Vapi assistant (Andy).
    ```
 
 
+## Usage with Poke
+
+### **Option 1: No Authentication (Simplest)**
+Connect Poke directly to your MCP server URL:
+- **Local**: `http://localhost:3000/sse`
+- **Deployed**: `https://YOUR_RAILWAY_URL/sse`
+- **No API key required**
+
+### **Option 2: With API Key Authentication**
+If you set `MCP_API_KEY` environment variable, Poke needs to authenticate:
+
+**Method A: Query Parameter**
+- **URL**: `https://YOUR_RAILWAY_URL/sse?apiKey=YOUR_MCP_API_KEY`
+
+**Method B: Authorization Header**
+- **URL**: `https://YOUR_RAILWAY_URL/sse`
+- **Header**: `Authorization: Bearer YOUR_MCP_API_KEY`
+
+### **Poke Configuration**
+In Poke's MCP server configuration:
+1. **Server Type**: HTTP/SSE
+2. **URL**: Your server's `/sse` endpoint
+3. **Authentication**: Optional API key (if you set `MCP_API_KEY`)
+
 ## Usage with MCP Clients
 
 Once deployed, you can connect to the MCP server using any MCP-compatible client:
@@ -177,6 +201,7 @@ console.log('Call result:', result);
 
 - `VAPI_API_KEY`: Your Vapi API key (required)
 - `ANDY`: Assistant ID for calls (defaults to `cde00b8a-3ebf-4d4f-8587-7e8fec8e5fda`)
+- `MCP_API_KEY`: Optional API key for MCP server authentication
 - `PORT`: Server port (Railway sets this automatically)
 
 ## Vapi Integration

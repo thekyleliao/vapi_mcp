@@ -27,11 +27,13 @@ class VapiMCPServer {
   private vapiApiKey: string;
   private assistantId: string;
   private port: number;
+  private mcpApiKey: string;
 
   constructor() {
     this.vapiApiKey = process.env.VAPI_API_KEY || '';
     this.assistantId = process.env.ANDY || 'cde00b8a-3ebf-4d4f-8587-7e8fec8e5fda';
     this.port = parseInt(process.env.PORT || '3000', 10);
+    this.mcpApiKey = process.env.MCP_API_KEY || ''; // Optional API key for MCP access
     
     if (!this.vapiApiKey) {
       throw new Error('VAPI_API_KEY environment variable is required');
@@ -162,6 +164,25 @@ class VapiMCPServer {
 
     // MCP SSE endpoint
     app.get('/sse', async (req, res) => {
+      // Optional API key authentication
+      if (this.mcpApiKey) {
+        const authHeader = req.headers.authorization;
+        const apiKey = authHeader?.replace('Bearer ', '') || req.query.apiKey as string;
+        
+        if (apiKey !== this.mcpApiKey) {
+          return res.status(401).json({ error: 'Invalid API key' });
+        }
+      }
+      
+      // Set proper SSE headers
+      res.writeHead(200, {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        'Connection': 'keep-alive',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Cache-Control'
+      });
+      
       const transport = new SSEServerTransport('/sse', res);
       await this.server.connect(transport);
     });
