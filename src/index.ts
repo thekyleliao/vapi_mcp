@@ -174,15 +174,7 @@ class VapiMCPServer {
         }
       }
       
-      // Set proper SSE headers
-      res.writeHead(200, {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache',
-        'Connection': 'keep-alive',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Cache-Control'
-      });
-      
+      // Don't set headers manually - let SSEServerTransport handle them
       const transport = new SSEServerTransport('/sse', res);
       await this.server.connect(transport);
     });
