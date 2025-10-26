@@ -124,27 +124,33 @@ Triggers an outbound phone call using your configured Vapi assistant (Andy).
 
 ## Usage with Poke
 
-### **Option 1: No Authentication (Simplest)**
-Connect Poke directly to your MCP server URL:
-- **Local**: `http://localhost:3000/sse`
-- **Deployed**: `https://YOUR_RAILWAY_URL/sse`
-- **No API key required**
+### **STDIO Transport (Recommended for Poke)**
 
-### **Option 2: With API Key Authentication**
-If you set `MCP_API_KEY` environment variable, Poke needs to authenticate:
+Poke supports MCP servers via STDIO transport. Use the STDIO version of the server:
 
-**Method A: Query Parameter**
-- **URL**: `https://YOUR_RAILWAY_URL/sse?apiKey=YOUR_MCP_API_KEY`
+**Local Testing:**
+```bash
+npm run dev:stdio
+```
 
-**Method B: Authorization Header**
+**For Poke Configuration:**
+- **Command**: `node /path/to/your/vapi-mcp-server/dist/stdio-server.js`
+- **Working Directory**: `/path/to/your/vapi-mcp-server`
+- **Environment Variables**: Set `VAPI_API_KEY` and `ANDY` in Poke's environment
+
+### **HTTP/SSE Transport (For Remote Access)**
+
+The HTTP version is available for remote access via Railway:
+
+**Local Testing:**
+```bash
+npm run dev
+```
+
+**Railway Deployment:**
 - **URL**: `https://YOUR_RAILWAY_URL/sse`
-- **Header**: `Authorization: Bearer YOUR_MCP_API_KEY`
-
-### **Poke Configuration**
-In Poke's MCP server configuration:
-1. **Server Type**: HTTP/SSE
-2. **URL**: Your server's `/sse` endpoint
-3. **Authentication**: Optional API key (if you set `MCP_API_KEY`)
+- **Transport**: Server-Sent Events (SSE)
+- **Authentication**: Optional via `MCP_API_KEY`
 
 ## Usage with MCP Clients
 
