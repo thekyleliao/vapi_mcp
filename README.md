@@ -62,7 +62,32 @@ Triggers an outbound phone call using your configured Vapi assistant (Andy).
 
 ## Railway Deployment
 
-### Method 1: Railway CLI (Recommended)
+### Method 1: Railway Dashboard (Recommended)
+
+1. **Push to GitHub:**
+   ```bash
+   # Create a GitHub repository and push your code
+   git remote add origin https://github.com/yourusername/vapi-mcp-server.git
+   git push -u origin master
+   ```
+
+2. **Deploy via Railway Dashboard:**
+   - Go to [Railway.app](https://railway.app)
+   - Click "New Project" → "Deploy from GitHub repo"
+   - Select your `vapi-mcp-server` repository
+   - Railway will automatically detect it's a Node.js project
+
+3. **Set Environment Variables:**
+   - In your Railway project dashboard, go to Variables tab
+   - Add these environment variables:
+     - `VAPI_API_KEY`: `02522fd6-cc43-4e7b-990d-36346d8899cf`
+     - `ANDY`: `cde00b8a-3ebf-4d4f-8587-7e8fec8e5fda`
+
+4. **Deploy:**
+   - Railway will automatically build and deploy
+   - Get your public URL from the deployment
+
+### Method 2: Railway CLI (Alternative)
 
 1. **Install Railway CLI:**
    ```bash
@@ -79,33 +104,23 @@ Triggers an outbound phone call using your configured Vapi assistant (Andy).
    railway init
    ```
 
-4. **Set environment variables:**
+4. **Add a service (interactive):**
    ```bash
-   railway variables set VAPI_API_KEY=your_vapi_api_key
-   railway variables set ANDY=cde00b8a-3ebf-4d4f-8587-7e8fec8e5fda
+   railway add
+   # Select "Empty Service" when prompted
    ```
 
-5. **Deploy:**
+5. **Set environment variables:**
+   ```bash
+   railway variables --set "VAPI_API_KEY=your_vapi_api_key"
+   railway variables --set "ANDY=cde00b8a-3ebf-4d4f-8587-7e8fec8e5fda"
+   ```
+
+6. **Deploy:**
    ```bash
    railway up
    ```
 
-### Method 2: Railway Dashboard
-
-1. **Connect Repository:**
-   - Go to [Railway.app](https://railway.app)
-   - Click "New Project" → "Deploy from GitHub repo"
-   - Select your repository
-
-2. **Set Environment Variables:**
-   - Go to your project → Variables tab
-   - Add:
-     - `VAPI_API_KEY`: Your Vapi API key
-     - `ANDY`: `cde00b8a-3ebf-4d4f-8587-7e8fec8e5fda`
-
-3. **Deploy:**
-   - Railway will automatically build and deploy
-   - Get your public URL from the deployment
 
 ## Usage with MCP Clients
 
